@@ -2,6 +2,11 @@ use std::io;
 use std::io::*;
 #[allow(non_snake_case)]
 
+pub struct File {
+    name: String,
+    full_type: String,
+}
+
 fn main() {
     /*Variables*/
     let run: bool = true;
