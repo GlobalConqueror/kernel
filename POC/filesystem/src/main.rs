@@ -1,12 +1,22 @@
 use std::io;
 use std::io::*;
-#[allow(non_snake_case)]
+
 
 #[derive(Debug)]
 pub struct File {
     name: String
 }
 
+fn trim(s: &mut String) {
+    if s.ends_with('\n') {
+        s.pop();
+        if s.ends_with('\r') {
+            s.pop();
+        }
+    }
+}
+
+#[allow(non_snake_case)]
 fn main() {
     /*Variables*/
     let run: bool = true;
@@ -19,7 +29,12 @@ fn main() {
         print!("> ");
         io::stdout().flush().unwrap();
         stdin().read_line(&mut input).ok().expect("Error: Failed to read line");
-        let userInstructCache: Vec<&str> = input.split(" ").collect();
+        trim(&mut input);
+        let mut userInstructCache: Vec<&str> = input.split(" ").collect();
+        for _i in 0..userInstructCache.len() {
+            println!("{:#?}", userInstructCache);
+        }
+        /*Input evaluation - Does not work*/
         if userInstructCache[0] == "touch" {
             let newFile = File { name: userInstructCache[1].parse().unwrap(),};
             files.push(newFile);
@@ -29,6 +44,11 @@ fn main() {
             for i in 0..files.len()  {
                 println!("{:#?}", files[i].name);
             }
+            continue;
+        }
+        else {
+            eprintln!("Invalid command");
+            userInstructCache.drain(..);
         }
     }
 }
