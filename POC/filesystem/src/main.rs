@@ -1,7 +1,6 @@
 use std::io;
 use std::io::*;
 
-
 #[derive(Debug)]
 pub struct File {
     name: String
@@ -22,6 +21,7 @@ fn main() {
     let run: bool = true;
     let mut input = String::new();
     let mut files = vec![File { name: "template.txt".parse().unwrap()}];
+    let mut clear: Vec<&str> = vec![""];
     /*On Start-Up*/
     println!("  DEMO SHELL");
     /*Main program*/
@@ -38,17 +38,19 @@ fn main() {
         if userInstructCache[0] == "touch" {
             let newFile = File { name: userInstructCache[1].parse().unwrap(),};
             files.push(newFile);
+            assert_eq!(userInstructCache, clear);
             continue;
         }
         else if userInstructCache[0] == "ls" || userInstructCache[0] == "dir" {
             for i in 0..files.len()  {
                 println!("{:#?}", files[i].name);
             }
+            assert_eq!(userInstructCache, clear);
             continue;
         }
         else {
             eprintln!("Invalid command");
-            userInstructCache.drain(..);
+            assert_eq!(userInstructCache, clear);
         }
     }
 }
